@@ -200,36 +200,45 @@ questionnaire = {
         },
     }
 }
-
-
-
-
-
-
     # Add more questions and branches as needed
 }
 
 # Initialize the user's responses as an empty dictionary
+
 user_responses = {}
 
 current_question = "Q1"
 while current_question in questionnaire:
     question_data = questionnaire[current_question]
     print(question_data["question"])
-    for option, next_question in question_data["options"].items():
-        print(f"{option}: {next_question}")
+    for option, option_data in question_data["options"].items():
+        if isinstance(option_data, dict):
+            print(f"{option}: {option_data['next_question']}")
+        else:
+            print(f"{option}: {option_data}")
 
     user_input = input("Your choice: ").strip()
 
     if user_input == "Other":
         custom_response = input("Please specify: ").strip()
         user_responses[current_question] = custom_response
+        questionnaire[current_question]["tally"] += 1  # Increment the tally for this question
         break
 
     user_responses[current_question] = user_input
 
+    # Assign the tally based on the user's answer
+    if user_input in question_data["options"]:
+        if isinstance(question_data["options"][user_input], dict):
+            questionnaire[current_question]["tally"] = question_data["options"][user_input]["tally"]
+
     current_question = question_data["options"].get(user_input, None)
+
+# Calculate the total tally by summing the tallies for each question
+total_tally = sum(question_data["tally"] for question_data in questionnaire.values())
 
 print("User responses:")
 for question, response in user_responses.items():
-    print(f"{question}: {response}")
+    print(f"{question}: {response} (Tally: {questionnaire[question]['tally']})")
+
+print(f"Total Tally: {total_tally}")
