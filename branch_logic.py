@@ -242,3 +242,19 @@ for question, response in user_responses.items():
     print(f"{question}: {response} (Tally: {questionnaire[question]['tally']})")
 
 print(f"Total Tally: {total_tally}")
+
+# Determine payment options based on the total tally
+payment_options = []
+if total_tally >= 10:
+    payment_options.append("Option A: $50")
+if total_tally >= 20:
+    payment_options.append("Option B: $100")
+if total_tally >= 30:
+    payment_options.append("Option C: $150")
+
+if payment_options:
+    print("\nPayment Options:")
+    for option in payment_options:
+        print(option)
+else:
+    print("\nNo payment options available for the current total tally.")
