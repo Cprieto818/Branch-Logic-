@@ -40,7 +40,12 @@ questionnaire = {
                 "next question":"Q22",
             },
             # --------------------------left off here------------------#
-            "Medium": "Q5",
+            "Medium":{
+                "tally":0.7,
+                "next question":"Q4",
+            },
+            "Fast":{
+            } "Q5",
             "Fast": "Q10",
         },
     },
